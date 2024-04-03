@@ -2,7 +2,7 @@
 #define __THREAD_FIXED_POINT_H
 
 typedef int fixed_point;
-
+//yorum satiri
 #define FRACTION 15
 // Convert x to integer (rounding toward zero):	x / f
 // convert x to integer rounding to nearest!
