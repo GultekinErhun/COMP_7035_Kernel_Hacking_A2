@@ -235,7 +235,7 @@ thread_create (const char *name, int priority,
   /* Add to run queue. */
   thread_unblock (t);
 
-  check_thread_yield ();
+  thread_teslimini_kontrol_et();
   return tid;
 }
 
@@ -372,9 +372,9 @@ thread_set_priority (int new_priority)
 {
     enum intr_level old_level = intr_disable ();
     thread_current ()->our_priority = new_priority;
-    update_thread (thread_current ());
+    thread_guncelle  (thread_current ());
     intr_set_level (old_level);
-    check_thread_yield ();
+    thread_teslimini_kontrol_et ();
 }
 
 /* Returns the current thread's priority. */
@@ -390,7 +390,7 @@ thread_set_nice (int nice)
 {
     thread_current ()->nice = nice;
     thread_update_priority_mlfqs (thread_current ());
-    check_thread_yield ();
+    thread_teslimini_kontrol_et ();
 }
 
 int
