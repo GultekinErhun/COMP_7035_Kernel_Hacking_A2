@@ -621,7 +621,7 @@ allocate_tid (void)
    Used by switch.S, which can't figure it out on its own. */
 uint32_t thread_stack_ofs = offsetof (struct thread, stack);
 
-void check_thread_yield (void)
+void thread_teslimini_kontrol_et(void)
 {
   enum intr_level old_level = intr_disable ();
   bool val = !list_empty (&ready_list) && list_entry (list_back (&ready_list), struct thread, elem)->priority > thread_get_priority ();
@@ -648,7 +648,7 @@ void set_sleeping_thread (int64_t ticks)
   thread_block ();
 }
 // update the priorities (not mlfqs)
-void update_thread (struct thread *t)
+void thread_guncelle  (struct thread *t)
 {
   enum intr_level old_level = intr_disable ();
   int our_priority = t->our_priority;
