@@ -157,4 +157,15 @@ void thread_update_recent_cpu(struct thread *, void *);
 void thread_update_priority_mlfqs(struct thread *);
 bool compare_threads (const struct list_elem *, const struct list_elem *, void *);
 
+
+void thread_teslimini_kontrol_et (void);
+void her_saniyede_tick (void);
+void sleeping_threadi_set_et (int64_t);
+void thread_guncelle (struct thread *);
+void hazir_listesini_duzenle (struct thread *);
+void thread_recent_cpu_guncelle (struct thread *, void *);
+void thread_priority_mlfqs_guncelle (struct thread *);
+bool threadleri_karsilastir (const struct list_elem *, const struct list_elem *, void *);
+
+
 #endif /* threads/thread.h */
