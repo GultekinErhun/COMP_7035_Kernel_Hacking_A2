@@ -677,7 +677,7 @@ void thread_priority_mlfqs_guncelle(struct thread *t, void *aux UNUSED)
 }
 void thread_update_priority_mlfqs(struct thread *t)
 {
-  int new_priority = (int) EN_YAKIN_TAMSAYIYA_YUVARLA (SUB_fixed_point (SABIT_NOKTAYA_DONUSTUR ((PRI_MAX - ((t->nice) * 2))),
+  int new_priority = (int) EN_YAKIN_TAMSAYIYA_YUVARLA (SABIT_NOKTA_CIKAR (SABIT_NOKTAYA_DONUSTUR ((PRI_MAX - ((t->nice) * 2))),
 						           DIVIDE_fixed_point (t->recent_cpu, 4)));
   if (new_priority > PRI_MAX)
       new_priority = PRI_MAX;
