@@ -669,7 +669,7 @@ void rearrange_ready_list (struct thread *t)
   list_insert_ordered (&ready_list, &t->elem, threadleri_karsilastir, NULL);
   intr_set_level (old_level);
 }
-void thread_priority_mlfqs_guncelle(struct thread *t, void *aux UNUSED)
+void thread_recent_cpu_guncelle(struct thread *t, void *aux UNUSED)
 { 
   t->recent_cpu = TAM_SAYI_EKLE (TAM_SAYIYLA_BOL (TAM_SAYIYLA_CARP (SABIT_NOKTA_CARP (load_avg, 2), t->recent_cpu),
                                TAM_SAYI_EKLE (SABIT_NOKTA_CARP (load_avg, 2), 1)), t->nice);
