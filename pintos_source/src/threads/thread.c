@@ -402,13 +402,13 @@ thread_get_nice (void)
 int
 thread_get_load_avg (void)
 {
-  return EN_YAKIN_TAMSAYIYA_YUVARLA (MULTIPLY_fixed_point (load_avg, 100));
+  return EN_YAKIN_TAMSAYIYA_YUVARLA (SABIT_NOKTA_CARP (load_avg, 100));
 }
 
 int
 thread_get_recent_cpu (void) 
 {
-  return EN_YAKIN_TAMSAYIYA_YUVARLA (MULTIPLY_fixed_point (thread_current ()->recent_cpu, 100));
+  return EN_YAKIN_TAMSAYIYA_YUVARLA (SABIT_NOKTA_CARP (thread_current ()->recent_cpu, 100));
 }
 
 /* Idle thread.  Executes when no other thread is ready to run.
@@ -635,7 +635,7 @@ void tick_every_second (void)
   enum intr_level old_level = intr_disable ();
   int waiting_threads = (list_size (&ready_list)) + ((thread_current () != idle_thread) ? 1 : 0);
 
-  load_avg = SABIT_NOKTA_TOPLA (DIVIDE_fixed_point (MULTIPLY_fixed_point (load_avg, 59), 60),
+  load_avg = SABIT_NOKTA_TOPLA (DIVIDE_fixed_point (SABIT_NOKTA_CARP (load_avg, 59), 60),
                               DIVIDE_fixed_point (SABIT_NOKTAYA_DONUSTUR (waiting_threads), 60));
   thread_foreach (thread_priority_mlfqs_guncelle, NULL);
   intr_set_level (old_level);
@@ -671,8 +671,8 @@ void rearrange_ready_list (struct thread *t)
 }
 void thread_priority_mlfqs_guncelle(struct thread *t, void *aux UNUSED)
 { 
-  t->recent_cpu = TAM_SAYI_EKLE (DIVIDE_INTEGER (MULTIPLY_INTEGER (MULTIPLY_fixed_point (load_avg, 2), t->recent_cpu),
-                               TAM_SAYI_EKLE (MULTIPLY_fixed_point (load_avg, 2), 1)), t->nice);
+  t->recent_cpu = TAM_SAYI_EKLE (DIVIDE_INTEGER (MULTIPLY_INTEGER (SABIT_NOKTA_CARP (load_avg, 2), t->recent_cpu),
+                               TAM_SAYI_EKLE (SABIT_NOKTA_CARP (load_avg, 2), 1)), t->nice);
   thread_update_priority_mlfqs (t);
 }
 void thread_update_priority_mlfqs(struct thread *t)
