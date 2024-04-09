@@ -635,7 +635,7 @@ void tick_every_second (void)
   enum intr_level old_level = intr_disable ();
   int waiting_threads = (list_size (&ready_list)) + ((thread_current () != idle_thread) ? 1 : 0);
 
-  load_avg = ADD_fixed_point (DIVIDE_fixed_point (MULTIPLY_fixed_point (load_avg, 59), 60),
+  load_avg = SABIT_NOKTA_TOPLA (DIVIDE_fixed_point (MULTIPLY_fixed_point (load_avg, 59), 60),
                               DIVIDE_fixed_point (SABIT_NOKTAYA_DONUSTUR (waiting_threads), 60));
   thread_foreach (thread_priority_mlfqs_guncelle, NULL);
   intr_set_level (old_level);
