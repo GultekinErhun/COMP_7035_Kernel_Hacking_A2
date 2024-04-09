@@ -108,15 +108,7 @@ struct thread
 	int our_priority;                   
 	int nice;
     int64_t remaining_time;
-	fixed_point recent_cpu;           
-
-	struct list_elem sleep_element;
-        struct list tutulan_kilitler;
-	struct lock *su_anki_kilit;       
-	int our_priority;                   
-	int nice;
-    	int64_t kalan_zaman;
-	sabit_nokta recent_cpu;                 
+	sabit_nokta recent_cpu;                   
   };
 
 /* If false (default), use round-robin scheduler.
