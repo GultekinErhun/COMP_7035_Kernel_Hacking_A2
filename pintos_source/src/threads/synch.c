@@ -306,7 +306,7 @@ bool locklari_karsilastir (const struct list_elem *first_elem, const struct list
 {
   return list_entry (first_elem, struct lock, elem)->max_p <= list_entry (second_elem, struct lock, elem)->max_p;
 }
-bool compare_sema_elem (const struct list_elem *first_elem, const struct list_elem *second_elem, void *aux UNUSED)
+bool sema_elem_karsilastir (const struct list_elem *first_elem, const struct list_elem *second_elem, void *aux UNUSED)
 {
   return list_entry (first_elem, struct semaphore_elem, elem)->priority <= list_entry (second_elem, struct semaphore_elem, elem)->priority;
 }
@@ -354,7 +354,7 @@ cond_wait (struct condition *cond, struct lock *lock)
   sema_init (&waiter.semaphore, 0);
 
   waiter.priority = thread_get_priority ();
-  list_insert_ordered (&cond->waiters, &waiter.elem, compare_sema_elem, NULL);
+  list_insert_ordered (&cond->waiters, &waiter.elem, sema_elem_karsilastir, NULL);
 
   lock_release (lock);
   sema_down (&waiter.semaphore);
