@@ -302,7 +302,7 @@ struct semaphore_elem
     int priority;
   };
 
-bool compare_locks (const struct list_elem *first_elem, const struct list_elem *second_elem, void * aux UNUSED)
+bool locklari_karsilastir (const struct list_elem *first_elem, const struct list_elem *second_elem, void * aux UNUSED)
 {
   return list_entry (first_elem, struct lock, elem)->max_p <= list_entry (second_elem, struct lock, elem)->max_p;
 }
