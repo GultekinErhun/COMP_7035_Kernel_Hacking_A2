@@ -213,7 +213,7 @@ lock_acquire (struct lock *lock)
                 temporary_lock->max_p = curr;
                 thread_guncelle(temp_lock_holder);
                 if (temp_lock_holder->status == THREAD_READY) {
-                    rearrange_ready_list(temp_lock_holder);
+                    hazir_listesini_duzenle(temp_lock_holder);
                 }
 
                 temporary_lock = temp_lock_holder->curr_lock;
