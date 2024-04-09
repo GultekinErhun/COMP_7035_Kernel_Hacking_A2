@@ -656,7 +656,7 @@ void thread_guncelle  (struct thread *t)
       t->priority = our_priority;
   else
   {
-      int priority = list_entry (list_max (&t->held_lock, compare_locks, NULL), struct lock, elem)->max_p;
+      int priority = list_entry (list_max (&t->held_lock, locklari_karsilastir , NULL), struct lock, elem)->max_p;
       t->priority = our_priority > priority ? our_priority : priority;
   }
   intr_set_level (old_level);
