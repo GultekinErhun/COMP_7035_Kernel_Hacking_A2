@@ -402,13 +402,13 @@ thread_get_nice (void)
 int
 thread_get_load_avg (void)
 {
-  return CONVERT_TO_INT_NEAREST (MULTIPLY_fixed_point (load_avg, 100));
+  return EN_YAKIN_TAMSAYIYA_YUVARLA (MULTIPLY_fixed_point (load_avg, 100));
 }
 
 int
 thread_get_recent_cpu (void) 
 {
-  return CONVERT_TO_INT_NEAREST (MULTIPLY_fixed_point (thread_current ()->recent_cpu, 100));
+  return EN_YAKIN_TAMSAYIYA_YUVARLA (MULTIPLY_fixed_point (thread_current ()->recent_cpu, 100));
 }
 
 /* Idle thread.  Executes when no other thread is ready to run.
@@ -636,7 +636,7 @@ void tick_every_second (void)
   int waiting_threads = (list_size (&ready_list)) + ((thread_current () != idle_thread) ? 1 : 0);
 
   load_avg = ADD_fixed_point (DIVIDE_fixed_point (MULTIPLY_fixed_point (load_avg, 59), 60),
-                              DIVIDE_fixed_point (CONVERT_TO_fixed_point (waiting_threads), 60));
+                              DIVIDE_fixed_point (SABIT_NOKTAYA_DONUSTUR (waiting_threads), 60));
   thread_foreach (thread_priority_mlfqs_guncelle, NULL);
   intr_set_level (old_level);
 }
@@ -677,7 +677,7 @@ void thread_priority_mlfqs_guncelle(struct thread *t, void *aux UNUSED)
 }
 void thread_update_priority_mlfqs(struct thread *t)
 {
-  int new_priority = (int) CONVERT_TO_INT_NEAREST (SUB_fixed_point (CONVERT_TO_fixed_point ((PRI_MAX - ((t->nice) * 2))),
+  int new_priority = (int) EN_YAKIN_TAMSAYIYA_YUVARLA (SUB_fixed_point (SABIT_NOKTAYA_DONUSTUR ((PRI_MAX - ((t->nice) * 2))),
 						           DIVIDE_fixed_point (t->recent_cpu, 4)));
   if (new_priority > PRI_MAX)
       new_priority = PRI_MAX;
