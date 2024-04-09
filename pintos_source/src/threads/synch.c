@@ -211,7 +211,7 @@ lock_acquire (struct lock *lock)
             struct thread *temp_lock_holder = lock->holder;
             while (temporary_lock->max_p < curr) {
                 temporary_lock->max_p = curr;
-                update_thread(temp_lock_holder);
+                thread_guncelle(temp_lock_holder);
                 if (temp_lock_holder->status == THREAD_READY) {
                     rearrange_ready_list(temp_lock_holder);
                 }
@@ -236,7 +236,7 @@ lock_acquire (struct lock *lock)
   if (!thread_mlfqs)
     {
       lock_update (lock);
-      update_thread (thread_current ());
+      thread_guncelle (thread_current ());
       thread_yield ();
 	}
 }
@@ -277,7 +277,7 @@ lock_release (struct lock *lock)
   list_remove (&lock->elem);
   intr_set_level (old_level);
   if (!thread_mlfqs)
-	  update_thread (lock->holder);
+	  thread_guncelle (lock->holder);
 
   lock->holder = NULL;
   sema_up (&lock->semaphore);
