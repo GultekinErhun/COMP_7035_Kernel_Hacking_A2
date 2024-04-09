@@ -272,7 +272,7 @@ thread_unblock (struct thread *t)
 
   old_level = intr_disable ();
   ASSERT (t->status == THREAD_BLOCKED);
-  list_insert_ordered (&ready_list, &t->elem, compare_threads, NULL);
+  list_insert_ordered (&ready_list, &t->elem, threadleri_karsilastir, NULL);
   t->status = THREAD_READY;
   intr_set_level (old_level);
 }
@@ -343,7 +343,7 @@ thread_yield (void)
 
   old_level = intr_disable ();
   if (current != idle_thread)
-      list_insert_ordered (&ready_list, &current->elem, compare_threads, NULL);
+      list_insert_ordered (&ready_list, &current->elem, threadleri_karsilastir, NULL);
   current->status = THREAD_READY;
   schedule ();
   intr_set_level (old_level);
@@ -666,7 +666,7 @@ void rearrange_ready_list (struct thread *t)
   ASSERT (t->status == THREAD_READY); 
   enum intr_level old_level = intr_disable ();
   list_remove (&t->elem);
-  list_insert_ordered (&ready_list, &t->elem, compare_threads, NULL);
+  list_insert_ordered (&ready_list, &t->elem, threadleri_karsilastir, NULL);
   intr_set_level (old_level);
 }
 void thread_priority_mlfqs_guncelle(struct thread *t, void *aux UNUSED)
@@ -686,7 +686,7 @@ void thread_update_priority_mlfqs(struct thread *t)
   t->priority = new_priority;
 }
 // compare the priorities
-bool compare_threads (const struct list_elem *a, const struct list_elem *b, void *aux UNUSED)
+bool threadleri_karsilastir (const struct list_elem *a, const struct list_elem *b, void *aux UNUSED)
 {
   return list_entry (a, struct thread, elem)->priority <= list_entry (b, struct thread, elem)->priority;
 }
