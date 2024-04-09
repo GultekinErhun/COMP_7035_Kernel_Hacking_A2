@@ -671,7 +671,7 @@ void rearrange_ready_list (struct thread *t)
 }
 void thread_priority_mlfqs_guncelle(struct thread *t, void *aux UNUSED)
 { 
-  t->recent_cpu = TAM_SAYI_EKLE (DIVIDE_INTEGER (TAM_SAYIYLA_CARP (SABIT_NOKTA_CARP (load_avg, 2), t->recent_cpu),
+  t->recent_cpu = TAM_SAYI_EKLE (TAM_SAYIYLA_BOL (TAM_SAYIYLA_CARP (SABIT_NOKTA_CARP (load_avg, 2), t->recent_cpu),
                                TAM_SAYI_EKLE (SABIT_NOKTA_CARP (load_avg, 2), 1)), t->nice);
   thread_update_priority_mlfqs (t);
 }
