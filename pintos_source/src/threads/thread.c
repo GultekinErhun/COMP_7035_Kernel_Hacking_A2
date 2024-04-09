@@ -145,7 +145,7 @@ thread_tick (void)
 
   if (thread_mlfqs)
     {
-      t->recent_cpu = ADD_INTEGER (t->recent_cpu, 1);
+      t->recent_cpu = TAM_SAYI_EKLE (t->recent_cpu, 1);
 	  if (thread_ticks % TIME_SLICE == 0)
           thread_update_priority_mlfqs (thread_current ());
 	}
@@ -671,8 +671,8 @@ void rearrange_ready_list (struct thread *t)
 }
 void thread_priority_mlfqs_guncelle(struct thread *t, void *aux UNUSED)
 { 
-  t->recent_cpu = ADD_INTEGER (DIVIDE_INTEGER (MULTIPLY_INTEGER (MULTIPLY_fixed_point (load_avg, 2), t->recent_cpu),
-                               ADD_INTEGER (MULTIPLY_fixed_point (load_avg, 2), 1)), t->nice);
+  t->recent_cpu = TAM_SAYI_EKLE (DIVIDE_INTEGER (MULTIPLY_INTEGER (MULTIPLY_fixed_point (load_avg, 2), t->recent_cpu),
+                               TAM_SAYI_EKLE (MULTIPLY_fixed_point (load_avg, 2), 1)), t->nice);
   thread_update_priority_mlfqs (t);
 }
 void thread_update_priority_mlfqs(struct thread *t)
