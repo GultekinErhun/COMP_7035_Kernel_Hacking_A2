@@ -637,7 +637,7 @@ void tick_every_second (void)
 
   load_avg = SABIT_NOKTA_TOPLA (SABIT_NOKTA_BOL (SABIT_NOKTA_CARP (load_avg, 59), 60),
                               SABIT_NOKTA_BOL (SABIT_NOKTAYA_DONUSTUR (waiting_threads), 60));
-  thread_foreach (thread_priority_mlfqs_guncelle, NULL);
+  thread_foreach (thread_recent_cpu_guncelle , NULL);
   intr_set_level (old_level);
 }
 void set_sleeping_thread (int64_t ticks)
