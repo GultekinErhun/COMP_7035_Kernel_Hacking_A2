@@ -55,5 +55,9 @@ void lock_update (struct lock *);
 bool compare_locks (const struct list_elem *, const struct list_elem *, void *);							
 bool compare_sema_elem (const struct list_elem *, const struct list_elem *, void *);
 
+void lock_guncelle (struct lock *);
+bool locklari_karsilastir (const struct list_elem *, const struct list_elem *, void *);							
+bool sema_elem_karsilastir (const struct list_elem *, const struct list_elem *, void *);
+
 
 #endif /* threads/synch.h */
