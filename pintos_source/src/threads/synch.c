@@ -235,7 +235,7 @@ lock_acquire (struct lock *lock)
   intr_set_level (old_level);
   if (!thread_mlfqs)
     {
-      lock_update (lock);
+      lock_guncelle (lock);
       thread_guncelle (thread_current ());
       thread_yield ();
 	}
@@ -403,7 +403,7 @@ struct thread * sema_get_max (struct semaphore *sema)
   ASSERT (!list_empty (&sema->waiters));
   return list_entry (list_max (&sema->waiters, threadleri_karsilastir, NULL), struct thread, elem);
 }
-void lock_update (struct lock *lock)
+void lock_guncelle (struct lock *lock)
 {
   int val;
   if (list_empty (&(&lock->semaphore)->waiters))
