@@ -635,8 +635,8 @@ void tick_every_second (void)
   enum intr_level old_level = intr_disable ();
   int waiting_threads = (list_size (&ready_list)) + ((thread_current () != idle_thread) ? 1 : 0);
 
-  load_avg = SABIT_NOKTA_TOPLA (DIVIDE_fixed_point (SABIT_NOKTA_CARP (load_avg, 59), 60),
-                              DIVIDE_fixed_point (SABIT_NOKTAYA_DONUSTUR (waiting_threads), 60));
+  load_avg = SABIT_NOKTA_TOPLA (SABIT_NOKTA_BOL (SABIT_NOKTA_CARP (load_avg, 59), 60),
+                              SABIT_NOKTA_BOL (SABIT_NOKTAYA_DONUSTUR (waiting_threads), 60));
   thread_foreach (thread_priority_mlfqs_guncelle, NULL);
   intr_set_level (old_level);
 }
@@ -678,7 +678,7 @@ void thread_priority_mlfqs_guncelle(struct thread *t, void *aux UNUSED)
 void thread_update_priority_mlfqs(struct thread *t)
 {
   int new_priority = (int) EN_YAKIN_TAMSAYIYA_YUVARLA (SABIT_NOKTA_CIKAR (SABIT_NOKTAYA_DONUSTUR ((PRI_MAX - ((t->nice) * 2))),
-						           DIVIDE_fixed_point (t->recent_cpu, 4)));
+						           SABIT_NOKTA_BOL (t->recent_cpu, 4)));
   if (new_priority > PRI_MAX)
       new_priority = PRI_MAX;
   else if (new_priority < PRI_MIN)
