@@ -661,7 +661,7 @@ void thread_guncelle  (struct thread *t)
   }
   intr_set_level (old_level);
 }
-void rearrange_ready_list (struct thread *t)
+void hazir_listesini_duzenle (struct thread *t)
 {
   ASSERT (t->status == THREAD_READY); 
   enum intr_level old_level = intr_disable ();
