@@ -122,7 +122,7 @@ sema_up (struct semaphore *sema)
   sema->value++;
   intr_set_level (old_level);
   
-  check_thread_yield ();
+  thread_teslimini_kontrol_et ();
 }
 
 static void sema_test_helper (void *sema_);
