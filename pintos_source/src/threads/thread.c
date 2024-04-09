@@ -55,7 +55,7 @@ static long long user_ticks;    /* # of timer ticks in user programs. */
 #define TIME_SLICE 4            /* # of timer ticks to give each thread. */
 static unsigned thread_ticks;   /* # of timer ticks since last yield. */
 
-static sabit_nokta load_avg;
+static fixed_point load_avg;
 /* If false (default), use round-robin scheduler.
    If true, use multi-level feedback queue scheduler.
    Controlled by kernel command-line option "-o mlfqs". */
@@ -402,13 +402,13 @@ thread_get_nice (void)
 int
 thread_get_load_avg (void)
 {
-  return CONVERT_TO_INT_NEAREST (MULTIPLY_sabit_nokta (load_avg, 100));
+  return CONVERT_TO_INT_NEAREST (MULTIPLY_fixed_point (load_avg, 100));
 }
 
 int
 thread_get_recent_cpu (void) 
 {
-  return CONVERT_TO_INT_NEAREST (MULTIPLY_sabit_nokta (thread_current ()->recent_cpu, 100));
+  return CONVERT_TO_INT_NEAREST (MULTIPLY_fixed_point (thread_current ()->recent_cpu, 100));
 }
 
 /* Idle thread.  Executes when no other thread is ready to run.
@@ -635,8 +635,8 @@ void tick_every_second (void)
   enum intr_level old_level = intr_disable ();
   int waiting_threads = (list_size (&ready_list)) + ((thread_current () != idle_thread) ? 1 : 0);
 
-  load_avg = ADD_sabit_nokta (DIVIDE_sabit_nokta (MULTIPLY_sabit_nokta (load_avg, 59), 60),
-                              DIVIDE_sabit_nokta (CONVERT_TO_sabit_nokta (waiting_threads), 60));
+  load_avg = ADD_fixed_point (DIVIDE_fixed_point (MULTIPLY_fixed_point (load_avg, 59), 60),
+                              DIVIDE_fixed_point (CONVERT_TO_fixed_point (waiting_threads), 60));
   thread_foreach (thread_priority_mlfqs_guncelle, NULL);
   intr_set_level (old_level);
 }
@@ -671,14 +671,14 @@ void rearrange_ready_list (struct thread *t)
 }
 void thread_priority_mlfqs_guncelle(struct thread *t, void *aux UNUSED)
 { 
-  t->recent_cpu = ADD_INTEGER (DIVIDE_INTEGER (MULTIPLY_INTEGER (MULTIPLY_sabit_nokta (load_avg, 2), t->recent_cpu),
-                               ADD_INTEGER (MULTIPLY_sabit_nokta (load_avg, 2), 1)), t->nice);
+  t->recent_cpu = ADD_INTEGER (DIVIDE_INTEGER (MULTIPLY_INTEGER (MULTIPLY_fixed_point (load_avg, 2), t->recent_cpu),
+                               ADD_INTEGER (MULTIPLY_fixed_point (load_avg, 2), 1)), t->nice);
   thread_update_priority_mlfqs (t);
 }
 void thread_update_priority_mlfqs(struct thread *t)
 {
-  int new_priority = (int) CONVERT_TO_INT_NEAREST (SUB_sabit_nokta (CONVERT_TO_sabit_nokta ((PRI_MAX - ((t->nice) * 2))),
-						           DIVIDE_sabit_nokta (t->recent_cpu, 4)));
+  int new_priority = (int) CONVERT_TO_INT_NEAREST (SUB_fixed_point (CONVERT_TO_fixed_point ((PRI_MAX - ((t->nice) * 2))),
+						           DIVIDE_fixed_point (t->recent_cpu, 4)));
   if (new_priority > PRI_MAX)
       new_priority = PRI_MAX;
   else if (new_priority < PRI_MIN)
