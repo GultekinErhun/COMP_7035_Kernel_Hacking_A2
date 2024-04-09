@@ -637,7 +637,7 @@ void tick_every_second (void)
 
   load_avg = ADD_FIXED_POINT (DIVIDE_FIXED_POINT (MULTIPLY_FIXED_POINT (load_avg, 59), 60),
                               DIVIDE_FIXED_POINT (CONVERT_TO_FIXED_POINT (waiting_threads), 60));
-  thread_foreach (thread_update_recent_cpu, NULL);
+  thread_foreach (thread_priority_mlfqs_guncelle, NULL);
   intr_set_level (old_level);
 }
 void set_sleeping_thread (int64_t ticks)
@@ -669,7 +669,7 @@ void rearrange_ready_list (struct thread *t)
   list_insert_ordered (&ready_list, &t->elem, compare_threads, NULL);
   intr_set_level (old_level);
 }
-void thread_update_recent_cpu(struct thread *t, void *aux UNUSED)
+void thread_priority_mlfqs_guncelle(struct thread *t, void *aux UNUSED)
 { 
   t->recent_cpu = ADD_INTEGER (DIVIDE_INTEGER (MULTIPLY_INTEGER (MULTIPLY_FIXED_POINT (load_avg, 2), t->recent_cpu),
                                ADD_INTEGER (MULTIPLY_FIXED_POINT (load_avg, 2), 1)), t->nice);
