@@ -147,7 +147,7 @@ thread_tick (void)
     {
       t->recent_cpu = TAM_SAYI_EKLE (t->recent_cpu, 1);
 	  if (thread_ticks % TIME_SLICE == 0)
-          thread_update_priority_mlfqs (thread_current ());
+          thread_priority_mlfqs_guncelle (thread_current ());
 	}
   struct list_elem *elem = list_begin (&sleeping_list);
   struct list_elem *temporary;
@@ -389,7 +389,7 @@ void
 thread_set_nice (int nice) 
 {
     thread_current ()->nice = nice;
-    thread_update_priority_mlfqs (thread_current ());
+    thread_priority_mlfqs_guncelle (thread_current ());
     thread_teslimini_kontrol_et ();
 }
 
@@ -673,9 +673,9 @@ void thread_priority_mlfqs_guncelle(struct thread *t, void *aux UNUSED)
 { 
   t->recent_cpu = TAM_SAYI_EKLE (TAM_SAYIYLA_BOL (TAM_SAYIYLA_CARP (SABIT_NOKTA_CARP (load_avg, 2), t->recent_cpu),
                                TAM_SAYI_EKLE (SABIT_NOKTA_CARP (load_avg, 2), 1)), t->nice);
-  thread_update_priority_mlfqs (t);
+  thread_priority_mlfqs_guncelle (t);
 }
-void thread_update_priority_mlfqs(struct thread *t)
+void thread_priority_mlfqs_guncelle(struct thread *t)
 {
   int new_priority = (int) EN_YAKIN_TAMSAYIYA_YUVARLA (SABIT_NOKTA_CIKAR (SABIT_NOKTAYA_DONUSTUR ((PRI_MAX - ((t->nice) * 2))),
 						           SABIT_NOKTA_BOL (t->recent_cpu, 4)));
