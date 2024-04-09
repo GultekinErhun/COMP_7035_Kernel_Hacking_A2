@@ -401,7 +401,7 @@ cond_broadcast (struct condition *cond, struct lock *lock)
 struct thread * sema_get_max (struct semaphore *sema)
 {
   ASSERT (!list_empty (&sema->waiters));
-  return list_entry (list_max (&sema->waiters, compare_threads, NULL), struct thread, elem);
+  return list_entry (list_max (&sema->waiters, threadleri_karsilastir, NULL), struct thread, elem);
 }
 void lock_update (struct lock *lock)
 {
