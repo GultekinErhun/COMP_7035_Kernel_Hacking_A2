@@ -630,7 +630,7 @@ void thread_teslimini_kontrol_et(void)
   if (val)
       thread_yield ();
 }
-void tick_every_second (void)
+void her_saniyede_tick(void)
 {
   enum intr_level old_level = intr_disable ();
   int waiting_threads = (list_size (&ready_list)) + ((thread_current () != idle_thread) ? 1 : 0);
@@ -640,7 +640,7 @@ void tick_every_second (void)
   thread_foreach (thread_recent_cpu_guncelle , NULL);
   intr_set_level (old_level);
 }
-void set_sleeping_thread (int64_t ticks)
+void sleeping_threadi_set_et (int64_t ticks)
 {
   struct thread *current = thread_current ();
   current->remaining_time = ticks;
