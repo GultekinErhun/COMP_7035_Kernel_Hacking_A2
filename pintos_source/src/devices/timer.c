@@ -93,7 +93,7 @@ timer_sleep (int64_t ticks)
   ASSERT (intr_get_level () == INTR_ON);
 
   intr_disable ();
-  set_sleeping_thread (ticks);
+  sleeping_threadi_set_et (ticks);
   intr_set_level (INTR_ON);
 }
 
@@ -173,7 +173,7 @@ timer_interrupt (struct intr_frame *args UNUSED)
 {
   ticks++;
   if (thread_mlfqs && ticks % TIMER_FREQ == 0)
-    tick_every_second ();
+    her_saniyede_tick ();
   thread_tick ();  
 }
 
